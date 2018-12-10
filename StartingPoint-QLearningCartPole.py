@@ -11,7 +11,7 @@ discountRate = 0.98          # Controls the discount rate for future rewards -- 
 actionProbabilityBase = 1.8  # This is k from the P(a_i|s) expression from section 13.3.5 and influences how random exploration is
 randomActionRate = 0.01      # Percent of time the next action selected by GetAction is totally random
 learningRateScale = 0.01     # Should be multiplied by visits_n from 13.11.
-trainingIterations = 200
+trainingIterations = 20000
 
 qlearner = QLearning.QLearning(stateSpaceShape=Assignment7Support.CartPoleStateSpaceShape(), numActions=env.action_space.n, discountRate=discountRate)
 
