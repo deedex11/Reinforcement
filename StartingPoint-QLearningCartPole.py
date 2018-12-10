@@ -11,21 +11,22 @@ discountRate = 0.98          # Controls the discount rate for future rewards -- 
 actionProbabilityBase = 1.8  # This is k from the P(a_i|s) expression from section 13.3.5 and influences how random exploration is
 randomActionRate = 0.01      # Percent of time the next action selected by GetAction is totally random
 learningRateScale = 0.01     # Should be multiplied by visits_n from 13.11.
-trainingIterations = 20000
+trainingIterations = 200
 
 qlearner = QLearning.QLearning(stateSpaceShape=Assignment7Support.CartPoleStateSpaceShape(), numActions=env.action_space.n, discountRate=discountRate)
 
 for trialNumber in range(trainingIterations):
     observation = env.reset()
     reward = 0
+    print("This is the trialn number: " + str(trialNumber))
     for i in range(300):
-        env.render()
-
+        #env.render()
         currentState = Assignment7Support.CartPoleObservationToStateSpace(observation)
         action = qlearner.GetAction(currentState, learningMode=True, randomActionRate=randomActionRate,actionProbabilityBase=actionProbabilityBase)
 
         oldState = Assignment7Support.CartPoleObservationToStateSpace(observation)
         observation, reward, isDone, info = env.step(action)
+        #print("This is the reward: " + str(reward))
         newState = Assignment7Support.CartPoleObservationToStateSpace(observation)
 
         qlearner.ObserveAction(oldState, action, newState, reward, learningRateScale=learningRateScale)
@@ -36,7 +37,7 @@ for trialNumber in range(trainingIterations):
             break
 
 ## Now do the best n runs I can
-#input("Enter to continue...")
+input("Enter to continue...")
 
 n = 20
 totalRewards = []
@@ -45,7 +46,7 @@ for runNumber in range(n):
     totalReward = 0
     reward = 0
     for i in range(300):
-        renderDone = env.render()
+        #renderDone = env.render()
 
         currentState = Assignment7Support.CartPoleObservationToStateSpace(observation)
         observation, reward, isDone, info = env.step(qlearner.GetAction(currentState, learningMode=False))
@@ -53,7 +54,7 @@ for runNumber in range(n):
         totalReward += reward
 
         if isDone:
-            renderDone = env.render()
+            #renderDone = env.render()
             print(i, totalReward)
             totalRewards.append(totalReward)
             break
