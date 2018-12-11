@@ -9,18 +9,19 @@ import math
 import numpy as np
 
 
-#discountRate = 1.00          # Controls the discount rate for future rewards -- this is gamma from 13.10
+discountRate = 0.98          # Controls the discount rate for future rewards -- this is gamma from 13.10
 actionProbabilityBase = math.e  # This is k from the P(a_i|s) expression from section 13.3.5 and influences how random exploration is
 randomActionRate = 0.01      # Percent of time the next action selected by GetAction is totally random
 learningRateScale = 0.01     # Should be multiplied by visits_n from 13.11.
 trainingIterations = 20000
 
-for discountRate in np.arange(0.982, 1.0, .001):
+for trainingIterations in np.arange(10000, 50000, 5000):
+    print("Iterations: " + str(trainingIterations))
     scores = []
     qlearner = QLearning.QLearning(stateSpaceShape=Assignment7Support.MountainCarStateSpaceShape(), numActions=env.action_space.n, discountRate=discountRate)
     for trial in range(5):
         print("Trial "+ str(trial))
-        for trialNumber in range(20000):
+        for trialNumber in range(trainingIterations):
             observation = env.reset()
             reward = 0
             for i in range(201):

@@ -5,7 +5,7 @@ import random
 from collections import defaultdict
 
 discount = 0.98          # Controls the discount rate for future rewards -- this is gamma from 13.10
-actionProbabilityBase = math.e  # This is k from the P(a_i|s) expression from section 13.3.5 and influences how random exploration is
+actionBase = math.e  # This is k from the P(a_i|s) expression from section 13.3.5 and influences how random exploration is
 randomRate = 0.01      # Percent of time the next action selected by GetAction is totally random
 learningRateScale = 0.01     # Should be multiplied by visits_n from 13.11.
 trainingIterations = 20000
@@ -21,11 +21,12 @@ class QLearning(torch.nn.Module):
         self.Q = defaultdict(lambda:[0 for i in range(numActions)], self.Q)
         self.visits = {}
         self.visits = defaultdict(lambda:[0 for i in range(numActions)], self.visits)
-        print("Discount rate set to: " + str(discountRate))
+        #print("Discount rate set to: " + str(discountRate))
         self.discountRate = discountRate
 
-    def GetAction(self, currentState, learningMode=True, randomActionRate=randomRate, actionProbabilityBase=actionProbabilityBase):
+    def GetAction(self, currentState, learningMode=True, randomActionRate=randomRate, actionProbabilityBase=actionBase):
         #print("Get action")
+        #print("Action: " + str(actionProbabilityBase))
         currentState = tuple(currentState)
         probabilities = self.getProbability(currentState, actionProbabilityBase)
 
