@@ -3,7 +3,6 @@ import gym
 
 env = gym.make('CartPole-v0')
 
-import random
 import QLearning # Your implementation goes here...
 import Assignment7Support
 
